@@ -25,9 +25,8 @@ await td.replaceEsm('../../gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-const startTimespanGather = (await import('../../gather/timespan-runner.js')).startTimespanGather;
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {startTimespanGather} = await import('../../gather/timespan-runner.js');
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

@@ -38,11 +38,10 @@ await td.replaceEsm('../gather/driver/service-workers.js', {
 });
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-const Runner = (await import('../runner.js')).Runner;
-const GatherRunner = (await import('../legacy/gather/gather-runner.js')).GatherRunner;
-const Config = (await import('../legacy/config/config.js')).Config;
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {Runner} = await import('../runner.js');
+const {GatherRunner} = await import('../legacy/gather/gather-runner.js');
+const {Config} = await import('../legacy/config/config.js');
 const {Audit} = await import('../audits/audit.js');
 const {Gatherer} = await import('../gather/gatherers/gatherer.js');
 const i18n = await import('../lib/i18n/i18n.js');

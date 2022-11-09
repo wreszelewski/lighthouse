@@ -12,7 +12,6 @@ import {
   mockDriverSubmodules,
   mockRunnerModule,
 } from './mock-driver.js';
-import {defaultNavigationConfig} from '../../config/constants.js';
 import {fnAny} from '../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {Runner as runnerActual} from '../../runner.js';
@@ -26,13 +25,13 @@ beforeEach(async () => {
 });
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 const runner = await import('../../gather/navigation-runner.js');
 const {LighthouseError} = await import('../../lib/lh-error.js');
 const DevtoolsLogGatherer = (await import('../../gather/gatherers/devtools-log.js')).default;
 const TraceGatherer = (await import('../../gather/gatherers/trace.js')).default;
 const {initializeConfig} = await import('../../config/config.js');
+const {defaultNavigationConfig} = await import('../../config/constants.js');
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
 
