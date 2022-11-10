@@ -452,9 +452,9 @@ class NetworkAnalyzer {
     // Try to find an exact match with the final URL first if we have one
     if (finalURL) {
       // equalWithExcludedFragments is expensive, so check that the finalUrl starts with the request first
-      const mainResource = records.find(request => finalURL.startsWith(request.url) &&
+      const mainResources = records.filter(request => finalURL.startsWith(request.url) &&
         URL.equalWithExcludedFragments(request.url, finalURL));
-      if (mainResource) return mainResource;
+      if (mainResources.length > 0) return mainResources[mainResources.length - 1];
       // TODO: beacon !mainResource to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
     }
 
